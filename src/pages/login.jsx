@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const LoginScreen = () => {
@@ -12,9 +13,15 @@ const LoginScreen = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(credentials);
+    try {
+        const response = await axios.post('/api/auth/login', credentials);
+
+    } catch (err) {
+
+        console.log(err)
+    }
   };
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
