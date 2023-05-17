@@ -1,5 +1,7 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const LoginScreen = () => {
   // Estado del formulario
@@ -7,6 +9,8 @@ const LoginScreen = () => {
     email: "",
     password: "",
   });
+  const router = useRouter();
+
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
@@ -17,10 +21,12 @@ const LoginScreen = () => {
     e.preventDefault();
     try {
         const response = await axios.post('/api/auth/login', credentials);
-
+        toast.success(response.data.message)
+        router.push('/dashboard')
     } catch (err) {
-
         console.log(err)
+        // Mostrar mensaje de error al usuario en UI
+        toast.error(err.response.data.message)
     }
   };
   return (
